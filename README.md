@@ -50,6 +50,13 @@ The calculation is as follows (3 revolutions x 2048 steps per revolution) / 60 s
 With a 9.8304Mhz external clock use pre-scaler 256 to get 38,400Hz
 Then use OCR1C to divide by 125, which will generate interrupt about every 3.2552mSec (307.2Hz)
 The interrupt routing will count 3 and change motor state at the 102.4 Hz
+### Accuracy test and adjustments
+To test accuracy, I synchronized clock time with real time and ran for 12 hours.
+After 12 hours I compared real time with clock time: the difference was 5min 40sec behind, 340[sec] out of 43,200[sec]
+This means that the crystal oscillator has a small deviation from the specified rate of 9.8304MHz.
+The difference is approximately 0.7870%, and with a clock deviser of 124 in OCR1C, instead of 125, the clock will yield a closer match to the desired motor rate of 102.4Hz.
+The new expected error after changing OCR1C to 124 is approximately 0.0131%, which is about 5.6452 seconds every 12 hours.
+Retest result measurements show that the clock is now less than 2 sec fast in 24 hours, which does not match the calculated accuracy.
 ## Sequence logic
 Refer to electronics schematics for diagram.
 These are external TTL logic components connected to create the correct motor coil sequence.

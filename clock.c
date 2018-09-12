@@ -59,7 +59,7 @@
 // IO ports B initialization
 #define     PB_DDR_INIT     0b00000011  // port data direction
 #define     PB_PUP_INIT     0b00010100  // port input pin pull-up
-#define     PB_INIT         0x00    // port initial values
+#define     PB_INIT         0x00        // port initial values
 
 #define     BUTTON_FAST_FWD 0b00000100
 #define     BUTTON_FAST_REV 0b00010000
@@ -67,12 +67,12 @@
 // Timer1 initialization
 #define     TCCR1_INIT      0x89    // CK/256
 #define     GTCCR_INIT      0x00
-#define     OCR1C_INIT      125
+#define     OCR1C_INIT      124     // Changed to 124 to compensate for oscillator accuracy
 #define     TIMSK_INIT      0x40    // Interrupt on OCR1A compare
 
 // Timer1 frequency constants
 // With 9.8304Mhz external clock use pre-scaler 256 to get 38,400Hz
-// Use OCR1A to divide by 125 that will generate interrupt about every 3.2552mSec
+// Use OCR1C to divide by 124 (was 125) that will generate interrupt about every 3.2552mSec
 // Interrupt routing will count 3 and change motor state at the 102.4 Hz
 #define     RATE_FAST       0       // 2 = 102.4Hz, 1 = 153.6Hz, 0 = 307.2Hz
 #define     RATE_NORMAL     2
@@ -115,9 +115,7 @@ void ioinit(void)
     OCR1C = OCR1C_INIT;
     TIMSK = TIMSK_INIT;
 
-    // initialize general IO PB and PD pins for output
-    // - PB0, PB1: output, no pull-up, right and left motor fwd/rev control
-    // -
+    // initialize general IO PB pins
     DDRB  = PB_DDR_INIT;            // PB pin directions
     PORTB = PB_INIT | PB_PUP_INIT;  // initial value and pull-up setting
 }

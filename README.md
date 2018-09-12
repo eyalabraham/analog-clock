@@ -16,11 +16,11 @@ More on this project on this web page [https://sites.google.com/site/eyalabraham
  |           |
  +-----+-----+
        |
- +-----+----+             +----------+  +---------+  +----------+
- |          |             |          |  |         |  |          |
- | ATtiny85 +--< PB0,1 >--+ Sequence +--+ ULN2003 +--+ 28BJY-48 |
- |          |             | Logic    |  |         |  |          |
- +-----+----+             +----------+  +---------+  +----------+
+ +-----+----+             +-----------+  +---------+  +----------+
+ |          |             |           |  |         |  |          |
+ | ATtiny85 +--< PB0,1 >--+ Sequencer +--+ ULN2003 +--+ 28BJY-48 |
+ |          |             | Logic     |  |         |  |          |
+ +-----+----+             +-----------+  +---------+  +----------+
        |
    < PB2,4 >
        |
@@ -30,6 +30,7 @@ More on this project on this web page [https://sites.google.com/site/eyalabraham
  | Fast-REV |
  | Run      |
  +----------+
+```
 ### Port B bit assignment
 ```
  *  b5 b4 b3 b2 b1 b0
@@ -57,7 +58,7 @@ This means that the crystal oscillator has a small deviation from the specified 
 The difference is approximately 0.7870%, and with a clock deviser of 124 in OCR1C, instead of 125, the clock will yield a closer match to the desired motor rate of 102.4Hz.
 The new expected error after changing OCR1C to 124 is approximately 0.0131%, which is about 5.6452 seconds every 12 hours.
 Retest result measurements show that the clock is now less than 2 sec fast in 24 hours, which does not match the calculated accuracy.
-## Sequence logic
+## Sequencer logic
 Refer to electronics schematics for diagram.
 These are external TTL logic components connected to create the correct motor coil sequence.
 Since the ATtiny85 has very few IO pins, and i did not want to disable the RESET pin, I needed a way to use fewer IO pins.
